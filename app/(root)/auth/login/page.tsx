@@ -7,7 +7,7 @@ import Image from "next/image";
 
 import {
   Field,
-  FieldDescription,
+  
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -30,6 +30,7 @@ import OtpVerification from "@/components/Application/OtpVerification";
 import { useDispatch } from "react-redux";
 import { login } from "@/store/reducer/authReducer";
 import { USER_DASHBOARD, WEBSITE_RESETPASSWORD } from "@/routes/website.route";
+
 
 
 import { useSearchParams } from "next/navigation";
@@ -82,7 +83,7 @@ const router=useRouter()
       try {
         setLoading(true);
 
-        const { data } = await axios.post(
+        const  data  = await axios.post(
           "/api/auth/login",
           values,
           {
@@ -91,12 +92,13 @@ const router=useRouter()
 
         );
 
-        console.log("✅ login response:", data);
+        console.log("✅ login response:", data.data);
 
-        if (!data.success) {
+        if (data.data.success===false) {
+          console.log("HASH")
           showToast({
             type: "error",
-            content: data.message || "Invalid email or password",
+            content: data.data.message || "Invalid email or password",
           });
 
           return; // ⭐ VERY IMPORTANT
@@ -107,7 +109,7 @@ const router=useRouter()
 
         showToast({
           type: "success",
-          content: data.message || "OTP sent successfully",
+          content: data.data.message || "OTP sent successfully",
         });
 
         resetForm();
@@ -120,6 +122,7 @@ const router=useRouter()
 
         } else if (error instanceof Error) {
           // alert(error.message);
+          
           showToast({ type: "error", content: error.message, });
         } else {
           // alert("Something went wrong");
@@ -131,7 +134,7 @@ const router=useRouter()
     },
   });
 
-  const handleVerification = async (values: any, reset: any) => {
+  const handleVerification = async (values: Record<string, string>, reset: () => void) => {
     console.log("ss", values)
     try {
       const { data } = await axios.post(
@@ -143,6 +146,7 @@ const router=useRouter()
       );
 
       console.log("✅ OTP response:", data);
+    
 
       if (!data.success) {
         alert(data.message || "Invalid OTP");
@@ -152,10 +156,13 @@ const router=useRouter()
 
       setOtpEmail("")
       dispatch(login(data.data))
-      if(searchParams.has('callback')){
-        router.push(searchParams.get('callback') as any)
-      }else{
-        data.data.role == "admin" ? router.push(ADMIN_DASHBOARD) : router.push(USER_DASHBOARD)
+      const callback = searchParams.get('callback');
+      if (callback) {
+        router.push(callback)
+      } else if (data.data.role === "admin") {
+        router.push(ADMIN_DASHBOARD)
+      } else {
+        router.push(USER_DASHBOARD)
       }
       reset();
 
@@ -182,7 +189,7 @@ const router=useRouter()
     }
   }
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex justify-center dark:text-white items-center min-h-screen">
       <Card className="w-sm">
         <CardContent>
           {/* Logo */}
@@ -199,12 +206,12 @@ const router=useRouter()
           {/* Heading */}
           {!otpEmail ?
             <>
-              <div className="text-center mt-2">
-                <h1 className="text-4xl font-semibold mb-4">
+              <div className="text-center dark:text-white mt-2">
+                <h1 className="text-4xl dark:text-white font-semibold mb-4">
                   Login into Account
                 </h1>
 
-                <p>
+                <p className="dark:text-gray-300">
                   Login into your account by filling out the form below
                 </p>
               </div>
@@ -285,7 +292,7 @@ const router=useRouter()
 
                 </FieldGroup>
                 <div className="text-center flex space-x-2 mt-3">
-                  <p className="text-sm font-semibold">Don't have  acount?</p>
+                  <p className="text-sm font-semibold">Don&apos;t have  acount?</p>
                   <Link href="/auth/register" className="text-sm text-cyan-500 font-semibold">Create Account</Link>
                   <Link href={WEBSITE_RESETPASSWORD} className="text-sm text-cyan-500 font-semibold">Forget Password</Link>
                 </div>

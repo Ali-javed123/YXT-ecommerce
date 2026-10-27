@@ -1,9 +1,11 @@
-import UsersModel from "@/models/user.models";
+import UsersModel from "@/models/user.model";
 import { response, catchError } from "@/lib/helperFunctions";
 import { connectDB } from "@/lib/databaseConnection";
 import { otpSchema } from "@/lib/zodScheema/zosScheema";
-import OtpModal from "@/lib/zodScheema/otpModals";
+import OtpModal from "@/models/otpModel";
 import { createToken } from "@/lib/tokenGenerate";
+import { cookies } from "next/headers"; // ✅ Yahan chalega, kyunki ye Route Handler hai
+
 interface JwtPayload {
     userId: string;
 }
@@ -40,7 +42,23 @@ export async function POST (request: Request) {
             avatar:getUser.avatar
 
         }
-        const token = createToken(logginedData._id.toString());
+    const token = createToken({
+      _id: getUser._id.toString(),
+      role: getUser.role,
+      name: getUser.name,
+      avatar: getUser.avatar,
+    });
+
+       
+            const cookieStore = await cookies();
+    cookieStore.set("access_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7,
+    });
+
         await getOtpData.deleteOne()
         return response(true ,200,'Login successfully.',{...logginedData,token})
 

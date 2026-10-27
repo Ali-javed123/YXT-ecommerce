@@ -1,4 +1,4 @@
-import UsersModel from "@/models/user.models";
+import UsersModel from "@/models/user.model";
 import { response, catchError } from "@/lib/helperFunctions";
 import jwt from "jsonwebtoken";
 import { connectDB } from "@/lib/databaseConnection";
@@ -23,9 +23,9 @@ export async function POST(request: Request) {
         }
 
     const decoded = jwt.verify(
-            token,
-            process.env.JWT_SECRET!
-        ) as jwt.JwtPayload & Partial<JwtPayload>;
+  token,
+  process.env.JWT_SECRET!
+) as jwt.JwtPayload & { _id: string };
 
         console.log("Token:", token);
         console.log("Decoded:", decoded);
@@ -39,21 +39,25 @@ export async function POST(request: Request) {
             );
         }
 
-        if (typeof decoded.userId !== "string") {
-            return response(
-                false,
-                400,
-                "Invalid user ID."
-            );
-        }
+        // if (typeof decoded.userId !== "string") {
+        //     return response(
+        //         false,
+        //         400,
+        //         "Invalid user ID."
+        //     );
+        // }
 
-        if (!isValidObjectId(decoded.userId)) {
-            return response(
-                false,
-                400,
-                "Invalid user ID."
-            );
-        }
+        // if (!isValidObjectId(decoded.userId)) {
+        //     return response(
+        //         false,
+        //         400,
+        //         "Invalid user ID."
+        //     );
+        // }
+        if (!decoded._id || !isValidObjectId(decoded._id)) {
+  return response(false, 400, "Invalid user ID in token.");
+}
+
 
         const user = await UsersModel.findById(decoded.userId);
 

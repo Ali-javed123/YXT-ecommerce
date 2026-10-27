@@ -1,7 +1,7 @@
 import { connectDB } from "@/lib/databaseConnection";
 import { response } from "@/lib/helperFunctions";
 import { loginSchema } from "@/lib/zodScheema/zosScheema";
-import UsersModel from "@/models/user.models";
+import UsersModel from "@/models/user.model";
 import { catchError } from "@/lib/helperFunctions";
 export async function PUT(request:any){
 try {

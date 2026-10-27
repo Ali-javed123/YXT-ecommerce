@@ -16,6 +16,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import {
   Collapsible,
@@ -35,9 +36,12 @@ import { adminAppSidebarMenu } from "@/lib/AdminSidebar";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
+  const {toggleSidebar}=useSidebar()
+  const [openMenus, setOpenMenus] = React.useState<Record<string, boolean>>({});
+
 
   const isActive = (url: string) =>
-    url !== "#" && (pathname === url || pathname.startsWith(url + "/"));
+    url !== "#" && (pathname === url );
 
   return (
     <Sidebar
@@ -67,11 +71,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </Link>
           <Button
             size="icon"
-            variant="ghost"
+            // variant="ghost"
             type="button"
-            className="size-8 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent/60 transition-colors"
+            onClick={toggleSidebar}
+            className="size-8 md:hidden rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent/60 transition-colors"
           >
-            <IoMdClose className="size-4" />
+            <IoMdClose className="size-4 text-white" />
           </Button>
         </div>
       </SidebarHeader>
@@ -93,12 +98,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   const hasActiveChild = item.submenu.some((sub) =>
                     isActive(sub.url)
                   );
+                  console.log("ADD",hasActiveChild)
 
                   return (
                     <Collapsible
                       key={item.title}
                       render={<SidebarMenuItem />}
                       defaultOpen={hasActiveChild}
+                      open={openMenus[item.title] ?? hasActiveChild}
+                      onOpenChange={(open: boolean) => {
+  setOpenMenus((prev: any) => ({ ...prev, [item.title]: open }));
+}}
                       className="group/collapsible"
                     >
                       <CollapsibleTrigger

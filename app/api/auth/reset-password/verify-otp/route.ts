@@ -1,8 +1,8 @@
-import UsersModel from "@/models/user.models";
+import UsersModel from "@/models/user.model";
 import { response, catchError } from "@/lib/helperFunctions";
 import { connectDB } from "@/lib/databaseConnection";
 import { otpSchema } from "@/lib/zodScheema/zosScheema";
-import OtpModal from "@/lib/zodScheema/otpModals";
+import OtpModal from "@/models/otpModel";
 import { createToken } from "@/lib/tokenGenerate";
 interface JwtPayload {
     userId: string;

@@ -21,6 +21,12 @@ import ButtonLoading from '@/components/Application/Button';
 import axios from 'axios';
 import { showToast } from '@/lib/showToast';
 import UpdatePassword from '@/components/Application/UpdatePassword';
+
+
+  interface otp{
+    email:string
+    otp:string
+  }
 const ResetPassword = () => {
     const [loading,setLoading]=useState<boolean>(false)
     const [otpEmail,setOtpEmail]=useState<string>()
@@ -103,12 +109,13 @@ showToast({ type: "success", content: data.message || "Registration failed", });
       }
   },
   });
-  const handleVerification=async(values:any,reset:any)=>{
-    console.log("ss",values)
- try {
-        const { data } = await axios.post(
-          "/api/auth/reset-password/verify-otp",
-          values,
+
+  const handleVerification = async (values: otp, reset: () => void) => {
+    console.log("ss", values);
+    try {
+      const { data } = await axios.post(
+        "/api/auth/reset-password/verify-otp",
+        values,
           {
             validateStatus: (status) => status < 500,
           }

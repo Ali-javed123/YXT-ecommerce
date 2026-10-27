@@ -2,9 +2,9 @@ import { connectDB } from "@/lib/databaseConnection";
 import { catchError, generateOTP, response } from "@/lib/helperFunctions";
 import { otpEmail } from "@/lib/otpEmail";
 import { sendMail } from "@/lib/sendMail";
-import OtpModal from "@/lib/zodScheema/otpModals";
+import OtpModal from "@/models/otpModel";
 import { loginSchema } from "@/lib/zodScheema/zosScheema";
-import UsersModel from "@/models/user.models";
+import UsersModel from "@/models/user.model";
 export async function POST(request:any){
 try {
     await connectDB()

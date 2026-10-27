@@ -38,12 +38,20 @@
 // };
 
 import nodemailer from "nodemailer";
+
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: process.env.NODEMAILER_HOST,
+  port: Number(process.env.NODEMAILER_PORT),
+  secure: false,
+
   auth: {
     user: process.env.NODEMAILER_EMAIL,
     pass: process.env.NODEMAILER_PASSWORD,
   },
+
+  pool: true,
+  maxConnections: 3,
+  maxMessages: 100,
 });
 
 export const sendMail = async (
@@ -52,8 +60,7 @@ export const sendMail = async (
   html: string
 ) => {
   try {
-    console.log("FROM:", process.env.NODEMAILER_EMAIL);
-    console.log("TO:", receiver);
+    console.time("sendMail");
 
     const info = await transporter.sendMail({
       from: `"Developer Ali Javed" <${process.env.NODEMAILER_EMAIL}>`,
@@ -62,14 +69,17 @@ export const sendMail = async (
       html,
     });
 
+    console.timeEnd("sendMail");
+
     console.log("EMAIL SENT:", info.messageId);
-    console.log("EMAIL WAS SENT TO:", receiver);
 
     return {
       success: true,
       messageId: info.messageId,
     };
   } catch (error) {
+    console.timeEnd("sendMail");
+
     console.error("EMAIL SENDING ERROR:", error);
 
     return {

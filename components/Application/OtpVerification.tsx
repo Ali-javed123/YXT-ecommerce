@@ -140,15 +140,15 @@ console.log(formik.values)
       </svg>
     </div>
 
-    <h2 className="text-2xl font-semibold tracking-tight text-gray-900">
+    <h2 className="text-2xl font-semibold tracking-tight dark:text-white text-gray-900">
       Verify your email
     </h2>
 
-    <p className="mt-2 max-w-sm text-sm leading-6 text-gray-500">
+    <p className="mt-2 max-w-sm text-sm leading-6 dark:text-white text-gray-500">
       We&apos;ve sent a 5-digit verification code to
     </p>
 
-    <p className="mt-1 text-sm font-medium text-gray-900">
+    <p className="mt-1 text-sm font-bold dark:text-gray-300  text-gray-900">
       {email}
     </p>
   </div>
@@ -211,9 +211,9 @@ console.log(formik.values)
 
     {/* OTP INFO */}
     <div className="mt-2 text-center">
-      <p className="text-xs text-gray-500">
+      <p className="text-xs dark:text-gray-300  text-gray-500">
         The verification code will expire in{" "}
-        <span className="font-medium text-gray-700">
+        <span className="font-medium dark:text-gray-300  text-gray-700">
           10 minutes
         </span>
         .
@@ -224,18 +224,18 @@ console.log(formik.values)
     <ButtonLoading
       type="submit"
       text="Verify & Continue"
-      className="mt-5 mb-2 w-full rounded-lg  py-3 text-sm font-medium text-white transition-all "
+      className="mt-5 mb-2 w-full dark:text-gray-300  rounded-lg  py-3 text-sm font-medium text-white transition-all "
       loading={false}
     />
 
     {/* RESEND */}
     <div className="mt-3 text-center">
-      <p className="text-sm text-gray-500 ">
+      <p className="text-sm text-gray-500 dark:text-gray-300 ">
         Didn&apos;t receive the code?{" "}
         <button
           type="button"
           onClick={resendOtp}
-          className="font-medium text-gray-900 underline  underline-offset-4 transition-colors hover:text-gray-600"
+          className="font-medium text-gray-900 dark:text-gray-300  underline  underline-offset-4 transition-colors hover:text-gray-600"
         >
           Resend code
         </button>

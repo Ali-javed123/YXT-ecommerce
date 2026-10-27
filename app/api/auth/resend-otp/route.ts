@@ -1,10 +1,10 @@
-import UsersModel from "@/models/user.models";
+import UsersModel from "@/models/user.model";
 import { response, catchError, generateOTP } from "@/lib/helperFunctions";
 import jwt from "jsonwebtoken";
 import { connectDB } from "@/lib/databaseConnection";
 import { isValidObjectId } from "mongoose";
 import { otpSchema } from "@/lib/zodScheema/zosScheema";
-import OtpModal from "@/lib/zodScheema/otpModals";
+import OtpModal from "@/models/otpModel";
 import { sendMail } from "@/lib/sendMail";
 import { otpEmail } from "@/lib/otpEmail";
 

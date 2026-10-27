@@ -1,7 +1,7 @@
   import { connectDB } from "@/lib/databaseConnection";
   import { response, catchError } from "@/lib/helperFunctions";
   import { registerSchema } from "@/lib/zodScheema/zosScheema";
-  import UsersModel from "@/models/user.models";
+  import UsersModel from "@/models/user.model";
   import { createToken } from "@/lib/tokenGenerate";
   import { sendMail } from "@/lib/sendMail";
   import { emailVerificationLink } from "@/lib/emailVerificationLink";
@@ -43,7 +43,12 @@
 
       await newRegister.save();
 
-        const token = createToken(newRegister._id.toString());
+const token = createToken({
+      _id: newRegister._id.toString(),
+      role: newRegister.role,
+      name: newRegister.name,
+      avatar: newRegister.avatar,
+    });
       const mailResult = await sendMail(
         email,
         "Email Verification request from Developer Ali Javed",
