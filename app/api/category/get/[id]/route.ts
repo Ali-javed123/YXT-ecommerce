@@ -16,6 +16,7 @@ export async function GET(
     const { id } = await params;
 
     const auth = await isAuthenticated(request, "admin");
+    await connectDB()
 
         if(!auth.isAuth){
           return response(false, 401, "Not authorized");

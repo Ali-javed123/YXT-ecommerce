@@ -176,3 +176,14 @@ export const columnConfig = <TData extends DataType>(
 
 
 }
+
+
+
+
+export function htmlToText(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}

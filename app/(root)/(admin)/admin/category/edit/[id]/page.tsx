@@ -115,7 +115,7 @@ initialValues: {
 
     {/* ✅ Yeh force karega left alignment */}
     <div className="mt-5  w-full flex justify-start items-start">
-      <Card className="py-0 w-md">      {/* w-md wapas lagayen */}
+    <Card className="py-0 w-md">      {/* w-md wapas lagayen */}
         <CardHeader className="py-2 px-4 [.border-b]:pb-2">
           <h3 className="text-xl font-bold text-gray-900 dark:text-white">
             Add Category

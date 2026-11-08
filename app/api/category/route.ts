@@ -74,6 +74,7 @@ export async function GET(request:NextRequest){
         const getCatgory=await CategoriesModel.aggregate(aggregationPipeLine);
         const totalRowCount=await CategoriesModel.countDocuments(matchQuery)
         return NextResponse.json({
+            success:true,
             data:getCatgory,
             meta:{totalRowCount}    
 

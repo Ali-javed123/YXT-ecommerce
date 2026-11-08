@@ -85,7 +85,11 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+/* ================================================================
+   DARK MODE — shadcn + CKEditor 5
+   ================================================================ */
 .dark {
+  /* shadcn tokens */
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -117,8 +121,95 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* ---------------- CKEditor 5 base tokens ---------------- */
+  --ck-color-base-background: hsl(240, 5%, 12%);
+  --ck-color-base-foreground: hsl(240, 5%, 16%);
+  --ck-color-base-border: hsl(240, 4%, 26%);
+  --ck-color-base-text: hsl(0, 0%, 92%);
+  --ck-color-text: hsl(0, 0%, 92%);
+
+  /* Focus / active */
+  --ck-color-focus-border: hsl(208, 90%, 62%);
+  --ck-color-focus-border-coordinates: 208, 90%, 62%;
+  --ck-color-focus-outer-shadow: hsla(208, 90%, 62%, 0.25);
+  --ck-color-base-active: hsl(208, 90%, 62%);
+  --ck-color-base-active-focus: hsl(208, 90%, 55%);
+
+  /* Buttons */
+  --ck-color-button-default-background: transparent;
+  --ck-color-button-default-hover-background: hsl(240, 5%, 22%);
+  --ck-color-button-default-active-background: hsl(240, 5%, 26%);
+  --ck-color-button-default-disabled-background: transparent;
+  --ck-color-button-default-text: hsl(0, 0%, 92%);
+  --ck-color-button-default-disabled-text: hsl(0, 0%, 45%);
+
+  --ck-color-button-on-background: hsl(240, 5%, 28%);
+  --ck-color-button-on-hover-background: hsl(240, 5%, 32%);
+  --ck-color-button-on-active-background: hsl(240, 5%, 34%);
+  --ck-color-button-on-color: hsl(208, 90%, 68%);
+  --ck-color-button-on-text: hsl(208, 90%, 68%);
+  --ck-color-button-on-disabled-background: hsl(240, 5%, 22%);
+
+  /* Split button */
+  --ck-color-split-button-hover-background: hsl(240, 5%, 22%);
+  --ck-color-split-button-hover-border: hsl(240, 4%, 30%);
+
+  /* Dropdowns */
+  --ck-color-dropdown-panel-background: hsl(240, 5%, 16%);
+  --ck-color-dropdown-panel-border: hsl(240, 4%, 28%);
+
+  /* Panels / popups */
+  --ck-color-panel-background: hsl(240, 5%, 16%);
+  --ck-color-panel-border: hsl(240, 4%, 28%);
+
+  /* Inputs */
+  --ck-color-input-background: hsl(240, 5%, 14%);
+  --ck-color-input-border: hsl(240, 4%, 30%);
+  --ck-color-input-text: hsl(0, 0%, 92%);
+  --ck-color-input-disabled-background: hsl(240, 5%, 18%);
+  --ck-color-input-disabled-border: hsl(240, 4%, 26%);
+  --ck-color-input-disabled-text: hsl(0, 0%, 60%);
+
+  /* Lists */
+  --ck-color-list-background: hsl(240, 5%, 16%);
+  --ck-color-list-button-hover-background: hsl(240, 5%, 22%);
+  --ck-color-list-button-on-background: hsl(240, 5%, 28%);
+  --ck-color-list-button-on-background-focus: hsl(240, 5%, 32%);
+  --ck-color-list-button-on-text: hsl(208, 90%, 68%);
+
+  /* Shadows */
+  --ck-color-shadow-drop: hsla(0, 0%, 0%, 0.5);
+  --ck-color-shadow-drop-active: hsla(0, 0%, 0%, 0.6);
+  --ck-color-shadow-inner: hsla(0, 0%, 0%, 0.3);
+
+  /* Editor content area */
+  --ck-color-editor-background: hsl(240, 5%, 10%);
+
+  /* Toolbar */
+  --ck-color-toolbar-border: hsl(240, 4%, 26%);
+  --ck-color-toolbar-background: hsl(240, 5%, 14%);
+
+  /* Tooltip */
+  --ck-color-tooltip-background: hsl(240, 5%, 20%);
+  --ck-color-tooltip-text: hsl(0, 0%, 92%);
+
+  /* Table */
+  --ck-color-table-border: hsl(240, 4%, 30%);
+  --ck-color-table-cell-selected-background: hsla(208, 90%, 62%, 0.15);
+  --ck-color-table-cell-selected-border: hsl(208, 90%, 62%);
+
+  /* Code block */
+  --ck-color-code-block-background: hsl(240, 5%, 8%);
+  --ck-color-code-block-text: hsl(0, 0%, 90%);
+
+  /* Highlight */
+  --ck-color-highlight-marker: hsl(50, 100%, 70%);
 }
 
+/* ================================================================
+   Base layer
+   ================================================================ */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -129,4 +220,227 @@
   html {
     @apply font-sans;
   }
+}
+
+/* ================================================================
+   CKEditor 5 — Dark mode specific overrides
+   ================================================================ */
+
+/* Toolbar Background */
+.dark .ck.ck-toolbar {
+  background: hsl(240, 5%, 14%);
+  border-color: hsl(240, 4%, 26%);
+}
+
+/* ⭐ FIX: Toolbar Icons & Text Visibility (Screenshot Issue) ⭐ */
+.dark .ck.ck-toolbar .ck-button,
+.dark .ck.ck-toolbar .ck-button__label,
+.dark .ck.ck-toolbar .ck-dropdown__button .ck-button__label {
+  color: hsl(0, 0%, 92%) !important;
+}
+
+/* Icons ko white force karo */
+.dark .ck.ck-toolbar .ck-icon,
+.dark .ck.ck-toolbar .ck-button .ck-icon {
+  color: hsl(0, 0%, 92%) !important;
+  fill: currentColor !important;
+  filter: none !important; /* Reset any external filters */
+}
+
+/* Hover / Active state icons */
+.dark .ck.ck-toolbar .ck-button:hover,
+.dark .ck.ck-toolbar .ck-button.ck-on {
+  background: hsl(240, 5%, 22%) !important;
+  color: hsl(208, 90%, 68%) !important;
+}
+
+.dark .ck.ck-toolbar .ck-button:hover .ck-icon,
+.dark .ck.ck-toolbar .ck-button.ck-on .ck-icon {
+  color: hsl(208, 90%, 68%) !important; 
+}
+
+/* Dropdown Arrow */
+.dark .ck.ck-toolbar .ck-dropdown__arrow {
+  color: hsl(0, 0%, 92%) !important;
+  border-top-color: hsl(0, 0%, 92%) !important;
+}
+
+/* Toolbar separators */
+.dark .ck.ck-toolbar .ck-toolbar__separator {
+  background: hsl(240, 4%, 30%) !important;
+}
+
+/* Editor content area */
+.dark .ck.ck-editor__main > .ck-editor__editable {
+  background: hsl(240, 5%, 10%);
+  color: hsl(0, 0%, 92%);
+  border-color: hsl(240, 4%, 26%);
+}
+
+/* Placeholder text */
+.dark .ck.ck-editor__editable > .ck-placeholder::before {
+  color: hsl(0, 0%, 55%);
+}
+
+/* Dropdowns / panels / balloon */
+.dark .ck.ck-dropdown__panel,
+.dark .ck.ck-balloon-panel,
+.dark .ck.ck-dialog,
+.dark .ck.ck-list,
+.dark .ck.ck-reset_all.ck-balloon-rotator__panel {
+  background: hsl(240, 5%, 16%) !important;
+  border: 1px solid hsl(240, 4%, 28%) !important;
+  color: hsl(0, 0%, 92%) !important;
+  box-shadow: 0 6px 24px hsla(0, 0%, 0%, 0.55),
+              0 2px 6px hsla(0, 0%, 0%, 0.35) !important;
+}
+
+/* Balloon arrow (white triangle bug fix) */
+.dark .ck.ck-balloon-panel.ck-balloon-panel_arrow_n::after,
+.dark .ck.ck-balloon-panel.ck-balloon-panel_arrow_s::after,
+.dark .ck.ck-balloon-panel.ck-balloon-panel_arrow_nw::after,
+.dark .ck.ck-balloon-panel.ck-balloon-panel_arrow_ne::after,
+.dark .ck.ck-balloon-panel.ck-balloon-panel_arrow_sw::after,
+.dark .ck.ck-balloon-panel.ck-balloon-panel_arrow_se::after {
+  border-bottom-color: hsl(240, 5%, 16%) !important;
+  border-top-color: hsl(240, 5%, 16%) !important;
+}
+
+/* List items inside dropdowns */
+.dark .ck.ck-list__item .ck-button {
+  color: hsl(0, 0%, 92%);
+}
+.dark .ck.ck-list__item .ck-button:hover {
+  background: hsl(240, 5%, 22%);
+}
+.dark .ck.ck-list__item .ck-button.ck-on {
+  background: hsl(240, 5%, 28%);
+  color: hsl(208, 90%, 68%);
+}
+
+/* Inputs inside dropdown / dialog */
+.dark .ck.ck-input {
+  background: hsl(240, 5%, 14%);
+  border-color: hsl(240, 4%, 30%);
+  color: hsl(0, 0%, 92%);
+}
+.dark .ck.ck-input:focus {
+  border-color: hsl(208, 90%, 62%);
+}
+
+/* Color picker grid tile borders */
+.dark .ck.ck-color-grid__tile {
+  border-color: hsl(240, 4%, 30%);
+}
+
+/* Split button */
+.dark .ck.ck-splitbutton > .ck-button {
+  border-color: hsl(240, 4%, 26%);
+}
+.dark .ck.ck-splitbutton:hover > .ck-splitbutton__arrow {
+  background: hsl(240, 5%, 22%);
+  border-color: hsl(240, 4%, 30%);
+}
+
+/* Tooltip */
+.dark .ck.ck-tooltip .ck-tooltip__text {
+  background: hsl(240, 5%, 20%);
+  color: hsl(0, 0%, 92%);
+}
+
+/* Image toolbar / link actions balloon */
+.dark .ck.ck-image-toolbar,
+.dark .ck.ck-link-actions {
+  background: hsl(240, 5%, 16%);
+  border-color: hsl(240, 4%, 28%);
+}
+
+/* Link form / preview */
+.dark .ck.ck-link-form {
+  background: hsl(240, 5%, 16%);
+  border-color: hsl(240, 4%, 28%);
+  color: hsl(0, 0%, 92%);
+}
+.dark .ck.ck-link-form .ck-label {
+  color: hsl(0, 0%, 92%);
+}
+
+/* Table actions / properties form */
+.dark .ck.ck-table-actions,
+.dark .ck.ck-table-properties-form {
+  background: hsl(240, 5%, 16%);
+  color: hsl(0, 0%, 92%);
+}
+
+/* Dialog inputs */
+.dark .ck.ck-dialog .ck-labeled-field-view__input-wrapper input,
+.dark .ck.ck-dialog .ck-input {
+  background: hsl(240, 5%, 14%);
+  color: hsl(0, 0%, 92%);
+  border-color: hsl(240, 4%, 30%);
+}
+.dark .ck.ck-dialog .ck-labeled-field-view__label {
+  color: hsl(0, 0%, 80%);
+}
+
+/* Source editing textarea */
+.dark .ck.ck-source-editing-area textarea {
+  background: hsl(240, 5%, 8%);
+  color: hsl(0, 0%, 92%);
+  border-color: hsl(240, 4%, 26%);
+}
+
+/* Code block inside content */
+.dark .ck-content pre,
+.dark .ck-content .ck-code-block {
+  background: hsl(240, 5%, 8%);
+  color: hsl(0, 0%, 90%);
+  border-color: hsl(240, 4%, 26%);
+}
+
+/* Blockquote */
+.dark .ck-content blockquote {
+  border-left-color: hsl(240, 4%, 30%);
+  color: hsl(0, 0%, 80%);
+}
+
+/* Table inside content */
+.dark .ck-content table,
+.dark .ck-content table td,
+.dark .ck-content table th {
+  border-color: hsl(240, 4%, 30%);
+}
+.dark .ck-content table th {
+  background: hsl(240, 5%, 16%);
+}
+
+/* HR */
+.dark .ck-content hr {
+  border-color: hsl(240, 4%, 26%);
+}
+
+/* Links inside content */
+.dark .ck-content a {
+  color: hsl(208, 90%, 68%);
+}
+
+/* ================================================================
+   Content style classes preview (STYLE_DEFINITIONS) — dark mode
+   ================================================================ */
+.dark .ck-content .info-box {
+  background: hsl(220, 40%, 18%);
+  border-left-color: hsl(208, 90%, 62%);
+}
+.dark .ck-content .marker {
+  background: hsl(50, 60%, 35%);
+}
+.dark .ck-content .spoiler {
+  background: hsl(0, 0%, 4%);
+  color: hsl(0, 0%, 4%);
+}
+.dark .ck-content .spoiler:hover {
+  color: hsl(0, 0%, 92%);
+}
+.dark .ck-content .side-quote {
+  border-left-color: hsl(240, 4%, 40%);
 }

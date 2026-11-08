@@ -3,7 +3,7 @@ import { catchError, isAuthenticated, response } from "@/lib/helperFunctions";
 import { connectDB } from "@/lib/databaseConnection";
 import cloudinary from "@/lib/cloudinary";
 import mongoose from "mongoose";
-import CategoriesModel from "@/models/categoryModel";
+import ProductModels from "@/models/Product.model";
 export async function PUT(request: NextRequest) {
   try {
     const isAdmin = await isAuthenticated(request,"admin");
@@ -24,17 +24,17 @@ export async function PUT(request: NextRequest) {
       return response(false, 400, "Invalid delete type");
     }
 
-    const category = await CategoriesModel.find({
+    const product = await ProductModels.find({
       _id: { $in: ids },
     });
 
-    if (category.length !== ids.length) {
-      return response(false, 404, "Some category items were not found");
+    if (product.length !== ids.length) {
+      return response(false, 404, "Some product items were not found");
     }
 
     const deletedAt = deleteType === "SD" ? new Date() : null;
 
-    await CategoriesModel.updateMany(
+    await ProductModels.updateMany(
       { _id: { $in: ids } },
       { $set: { deletedAt } }
     );
@@ -43,11 +43,11 @@ export async function PUT(request: NextRequest) {
       true,
       200,
       deleteType === "SD"
-        ? "category moved to trash"
-        : "category restored"
+        ? "product moved to trash"
+        : "product restored"
     );
   } catch (error: unknown) {
-    console.error("category update error:", error);
+    console.error("product update error:", error);
 
     return response(
       false,
@@ -84,16 +84,16 @@ export async function DELETE (request: NextRequest) {
     }
 
     // Find multiple media records
-    const Category = await CategoriesModel.find({
+    const Product = await ProductModels.find({
       _id: { $in: ids },
     }).lean();
 
-    if (Category.length === 0) {
-      return response(false, 404, "Category not found");
+    if (Product.length === 0) {
+      return response(false, 404, "Product not found");
     }
 
-    // Delete Category records from MongoDB
-    const result = await CategoriesModel.deleteMany({
+    // Delete Product records from MongoDB
+    const result = await ProductModels.deleteMany({
       _id: { $in: ids },
     });
 
@@ -103,10 +103,10 @@ export async function DELETE (request: NextRequest) {
     return response(
       true,
       200,
-      ` Category item(s) deleted permanently.`
+      ` Product item(s) deleted permanently.`
     );
   } catch (error: unknown) {
-    console.error("Permanent Category deletion error:", error);
+    console.error("Permanent Product deletion error:", error);
 
     return response(
       false,

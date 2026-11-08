@@ -9,14 +9,14 @@ import { FaPlus } from "react-icons/fa";
 import Datatable from "@/components/Application/Datatable";
 import DatatableWrapper from "@/components/Application/DatatableWrapper";
 import { columnConfig } from "@/lib/helperFunctions";
-import { DT_CATEGORY_COLUMN } from "@/lib/column";
+import { DT_CATEGORY_COLUMN, DT_PRODUCT_COLUMN } from "@/lib/column";
 import type { MRT_Row } from "material-react-table";
 import EditAction from "@/components/Application/EditAction";
 import DeleteAction from "@/components/Application/DeleteAction";
 import { useSearchParams } from "next/navigation";
 import { configureStore } from "@reduxjs/toolkit";
 export type DeleteType = "SD" | "PD" | "RSD";
-
+import { DT_PRODUCT_VARIANTS_COLUMN } from "@/lib/column";
 
 interface PageProps {
   params: Promise<{
@@ -33,7 +33,22 @@ type trashOf=keyof typeof TrashConfig;
       fetchUrl:'/api/category',
       exportUrl:'/api/category/export',
       deleteUrl:'/api/category/delete'
+    },
+     product:{
+      title:"Product Trash",
+      columns:DT_PRODUCT_COLUMN,
+      fetchUrl:'/api/product',
+      exportUrl:'/api/product/export',
+      deleteUrl:'/api/product/delete'
+    },
+    "product-varient":{
+      title:"Product Varient Trash",
+      columns:DT_PRODUCT_VARIANTS_COLUMN,
+      fetchUrl:'/api/product-varient',
+      exportUrl:'/api/product-varient/export',
+      deleteUrl:'/api/product-varient/delete'
     }
+
   }
 
 const Page = ({params}:PageProps) => {
@@ -88,7 +103,7 @@ const action = <TData extends DataType,>(
 
             <h2 className="text-xl font-bold">Trash Category</h2>
 
-          <Link 
+          {/* <Link 
           href={ADMIN_CATERGORY_ADD}
             className={buttonVariants()}
 
@@ -98,7 +113,7 @@ const action = <TData extends DataType,>(
           <FaPlus/>
             
             New Category
-            </Link>
+            </Link> */}
             </div>
         </CardHeader>
 

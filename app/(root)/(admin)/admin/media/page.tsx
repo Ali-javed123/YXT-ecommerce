@@ -70,7 +70,7 @@ const page = () => {
             {href:ADMIN_MEDIA_SHOW,label:"Media"},
         ]
 
-          const fetchMedia = async (page: number, deleteType: string) => {
+    const fetchMedia = async (page: number, deleteType: string) => {
     const response = await axios.get(
       `/api/media?page=${page}&limit=10&deleteType=${deleteType}`
     )
@@ -293,7 +293,6 @@ useEffect(() => {
               </div> */}
               <Media 
            media={media}
-           key={i}
            handleDelete={handleDelete}
            deleteType={deleteType}
            setSelectedMedia={setSelectedMedia}

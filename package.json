@@ -3,13 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/copy-ckeditor.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/copy-ckeditor.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "node scripts/copy-ckeditor.mjs --force"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
+    "@ckeditor/ckeditor5-react": "^12.0.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@hookform/resolvers": "^5.9.1",
@@ -24,11 +28,17 @@
     "@types/redux-persist": "^4.0.0",
     "axios": "^1.20.0",
     "bcryptjs": "^3.0.3",
+    "ckeditor4": "4.22.1",
+    "ckeditor4-react": "4.3.0",
+    "ckeditor5": "^49.0.1",
+    "ckeditor5-dark-mode": "^0.0.4",
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^2.11.0",
     "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
     "cn": "^0.3.0",
     "dayjs": "^1.11.23",
+    "entities": "^9.0.0",
     "export-to-csv": "^1.5.0",
     "formik": "^2.4.9",
     "input-otp": "^1.5.0",
@@ -57,6 +67,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/ckeditor4": "^4.20.7",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -65,5 +76,11 @@
     "eslint-config-next": "16.3.3",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "overrides": {
+    "ckeditor4-react": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
   }
 }

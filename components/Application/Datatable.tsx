@@ -246,8 +246,9 @@ renderRowActionMenuItems: ({ row }) =>
           })
           let csv;
           if(Object.keys(selectedRow).length>0){
-            const rowData=selectedRows.map((row:any)=>row.orignal)
+            const rowData=selectedRows.map((row:any)=>row.original)
             csv=generateCsv(csvConfig)(rowData)
+
           }else{
             const{data:response}=await axios.get(exportEndpoint)
             if(!response.success){
@@ -255,15 +256,17 @@ renderRowActionMenuItems: ({ row }) =>
             }
             const responseData=response.data
             csv=generateCsv(csvConfig)(responseData)
-
-
+            
+            
           }
           download(csvConfig)(csv)
+          setExportLoading(false)
 
 
     } catch (error) {
       console.log("Datatable error",error)
-      setExportLoading(!exportLoading)
+          setExportLoading(false)
+
     }
 
   }

@@ -22,7 +22,10 @@ const formSchema = z.object({
 
 const Page = () => {
   const [loading, setLoading] = useState(false);
+const [open, setOpen] = useState(false);
+const [selectedMedia, setSelectedMedia] = useState<string[]>([]);
 
+console.log("selectedMedia",selectedMedia)
   const breadcrum = [
     { href: ADMIN_DASHBOARD, label: "Dashboard" },
     { href: ADMIN_CATERGORY, label: "Category" },
