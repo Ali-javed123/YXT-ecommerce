@@ -27,4 +27,25 @@ export const ADMIN_PRODUCT_Varient_EDIT = (id: string) =>
 export const ADMIN_PRODUCT_Varient_ADD='/admin/product-varient/add'
 
 
+
+
+//Coupon Route
+export const ADMIN_COUPON='/admin/coupon'
+export const ADMIN_COUPON_EDIT = (id: string) =>
+  id ? `/admin/coupon/edit/${id}` : "";
+export const ADMIN_COUPON_ADD='/admin/coupon/add'
+
+
+
+//Customer Route
+export const ADMIN_CUSTOMER='/admin/customer'
+export const ADMIN_CUSTOMER_EDIT = (id: string) =>
+  id ? `/admin/customer/edit/${id}` : "";
+export const ADMIN_CUSTOMER_ADD='/admin/customer/add'
+
+
+//Customer Route
+export const ADMIN_REVIEW='/admin/review'
+
+
 export const ADMIN_TRASH='/admin/trash'

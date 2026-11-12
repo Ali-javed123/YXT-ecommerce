@@ -198,7 +198,8 @@ useEffect(() => {
           <CardHeader className='py-2 px-4 [.border-b]:pb-2'>
             <div className='flex justify-between items-center'>
               <h4 className='text-black dark:text-gray-300 font-bold text-2xl'>Media</h4>
-              <div className='flex  items-center'>
+<div className='flex items-center gap-2'>
+
      {deleteType=="SD"&& <UploadMedia
       isMultiple maxFiles={10}
       
@@ -208,12 +209,12 @@ useEffect(() => {
         <div className="flex gap-4 items-center">
 
         {deleteType=="SD"?
-        <Button type='button' variant={'destructive'}>
+        <Button className={'ml-2'} type='button' variant={'destructive'}>
           <Link href={`${ADMIN_MEDIA_SHOW}?trashof=media`}>
           Trash
           </Link>
         </Button>:deleteType=="PD"?
-        <Button type='button' >
+        <Button className={'ml-2'} type='button' >
           <Link href={`${ADMIN_MEDIA_SHOW}`}>
           Back to Media
           </Link>

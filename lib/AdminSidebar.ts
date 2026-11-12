@@ -6,7 +6,7 @@ import { LuUserRound } from "react-icons/lu";
 import { IoMdStarOutline } from "react-icons/io";
 import { MdOutlinePermMedia } from "react-icons/md";
 import { RiCoupon2Line } from "react-icons/ri";
-import { ADMIN_CATERGORY, ADMIN_CATERGORY_ADD, ADMIN_DASHBOARD, ADMIN_MEDIA_SHOW, ADMIN_PRODUCT, ADMIN_PRODUCT_ADD, ADMIN_PRODUCT_EDIT, ADMIN_PRODUCT_Varient, ADMIN_PRODUCT_Varient_ADD } from "@/routes/AdminPanel.route";
+import { ADMIN_CATERGORY, ADMIN_CATERGORY_ADD, ADMIN_COUPON, ADMIN_COUPON_ADD, ADMIN_CUSTOMER, ADMIN_DASHBOARD, ADMIN_MEDIA_SHOW, ADMIN_PRODUCT, ADMIN_PRODUCT_ADD, ADMIN_PRODUCT_EDIT, ADMIN_PRODUCT_Varient, ADMIN_PRODUCT_Varient_ADD, ADMIN_REVIEW } from "@/routes/AdminPanel.route";
 
 
 export const adminAppSidebarMenu=[
@@ -64,11 +64,11 @@ export const adminAppSidebarMenu=[
     submenu:[
 {
     title:"Add Coupons",
-    url:"#",
+    url:ADMIN_COUPON_ADD,
 },
 {
-    title:"All Coupons",
-    url:"#",
+    title:"All Coupons                                                                              ",
+    url:ADMIN_COUPON,
 },
 
 
@@ -84,14 +84,14 @@ export const adminAppSidebarMenu=[
     },
     {
     title:"Customers",
-    url:"#",
+    url:ADMIN_CUSTOMER,
     icons:LuUserRound,
     
 
     },
     {
     title:"Rating & Review",
-    url:"#",
+    url:ADMIN_REVIEW,
     icons:IoMdStarOutline,
     
 

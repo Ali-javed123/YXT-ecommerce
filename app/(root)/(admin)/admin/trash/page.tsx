@@ -9,7 +9,7 @@ import { FaPlus } from "react-icons/fa";
 import Datatable from "@/components/Application/Datatable";
 import DatatableWrapper from "@/components/Application/DatatableWrapper";
 import { columnConfig } from "@/lib/helperFunctions";
-import { DT_CATEGORY_COLUMN, DT_PRODUCT_COLUMN } from "@/lib/column";
+import { DT_CATEGORY_COLUMN, DT_COUPON_COLUMN, DT_CUSTOMERS_COLUMN, DT_PRODUCT_COLUMN, DT_REVIEWS_COLUMN } from "@/lib/column";
 import type { MRT_Row } from "material-react-table";
 import EditAction from "@/components/Application/EditAction";
 import DeleteAction from "@/components/Application/DeleteAction";
@@ -47,7 +47,29 @@ type trashOf=keyof typeof TrashConfig;
       fetchUrl:'/api/product-varient',
       exportUrl:'/api/product-varient/export',
       deleteUrl:'/api/product-varient/delete'
+    },
+    "coupon":{
+      title:"Coupon Trash",
+      columns:DT_COUPON_COLUMN,
+      fetchUrl:'/api/coupon',
+      exportUrl:'/api/coupon/export',
+      deleteUrl:'/api/coupon/delete'
+    },
+    "customer":{
+      title:"Customer Trash",
+      columns:DT_CUSTOMERS_COLUMN,
+      fetchUrl:'/api/customer',
+      exportUrl:'/api/customer/export',
+      deleteUrl:'/api/customer/delete'
+    },
+    "review":{
+      title:"Review Trash",
+      columns:DT_REVIEWS_COLUMN,
+      fetchUrl:'/api/review',
+      exportUrl:'/api/review/export',
+      deleteUrl:'/api/review/delete'
     }
+
 
   }
 

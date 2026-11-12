@@ -1,0 +1,117 @@
+import { NextRequest } from "next/server";
+import { catchError, isAuthenticated, response } from "@/lib/helperFunctions";
+import { connectDB } from "@/lib/databaseConnection";
+import cloudinary from "@/lib/cloudinary";
+import mongoose from "mongoose";
+import CouponModels from "@/models/coupon.model";
+export async function PUT(request: NextRequest) {
+  try {
+    const isAdmin = await isAuthenticated(request,"admin");
+
+    if (!isAdmin.isAuth) {
+      return response(false, 401, "Not authorized");
+    }
+
+    await connectDB();
+
+    const { ids, deleteType } = await request.json();
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return response(false, 400, "Invalid IDs or empty data");
+    }
+
+    if (!["SD", "RSD"].includes(deleteType)) {
+      return response(false, 400, "Invalid delete type");
+    }
+
+    const coupon = await CouponModels.find({
+      _id: { $in: ids },
+    });
+
+    if (coupon.length !== ids.length) {
+      return response(false, 404, "Some coupon items were not found");
+    }
+
+    const deletedAt = deleteType === "SD" ? new Date() : null;
+
+    await CouponModels.updateMany(
+      { _id: { $in: ids } },
+      { $set: { deletedAt } }
+    );
+
+    return response(
+      true,
+      200,
+      deleteType === "SD"
+        ? "coupon moved to trash"
+        : "coupon restored"
+    );
+  } catch (error: unknown) {
+    console.error("coupon update error:", error);
+
+    return response(
+      false,
+      500,
+      error instanceof Error ? error.message : "Internal server error"
+    );
+  }
+}
+
+export async function DELETE (request: NextRequest) {
+  
+  try {
+    const isAdmin = await isAuthenticated(request,"admin");
+
+    if (!isAdmin.isAuth) {
+      return response(false, 401, "Not authorized");
+    }
+
+    await connectDB();
+
+    const { ids, deleteType } = await request.json();
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return response(false, 400, "Invalid IDs or empty data");
+    }
+
+    if (deleteType !== "PD") {
+      return response(false, 400, "Invalid delete type");
+    }
+
+    // Validate MongoDB IDs
+    if (!ids.every((id: string) => mongoose.Types.ObjectId.isValid(id))) {
+      return response(false, 400, "Invalid MongoDB ID");
+    }
+
+    // Find multiple media records
+    const Coupon = await CouponModels.find({
+      _id: { $in: ids },
+    }).lean();
+
+    if (Coupon.length === 0) {
+      return response(false, 404, "Coupon not found");
+    }
+
+    // Delete Product records from MongoDB
+    const result = await CouponModels.deleteMany({
+      _id: { $in: ids },
+    });
+
+    // Delete associated Cloudinary resources
+   
+
+    return response(
+      true,
+      200,
+      ` Product item(s) deleted permanently.`
+    );
+  } catch (error: unknown) {
+    console.error("Permanent Product deletion error:", error);
+
+    return response(
+      false,
+      500,
+      error instanceof Error ? error.message : "Internal server error"
+    );
+  }
+}

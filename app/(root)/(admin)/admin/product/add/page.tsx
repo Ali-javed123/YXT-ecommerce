@@ -136,12 +136,12 @@ console.log("option",option)
       }
     },
   });
-useEffect(()=>{
-if(selectedMedia.length<=0){
-  showToast({type:"error",content:'please select a media image'})
-}
+// useEffect(()=>{
+// if(selectedMedia.length<=0){
+//   showToast({type:"error",content:'please select a media image'})
+// }
 
-},[selectedMedia])
+// },[selectedMedia])
 
 useEffect(()=>{
   if(selectedMedia.length>0){
